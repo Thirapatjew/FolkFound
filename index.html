@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FolkFound - Premium Experience</title>
+    <title>FolkFound - Smart AI Chat</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* --- GLOBAL & RESET --- */
+        /* --- GLOBAL VARIABLES & RESET --- */
         :root {
             --primary: #FF7043; --primary-dark: #E64A19; --secondary: #263238;
             --bg-color: #F7F9FC; --white: #FFFFFF;
-            --shadow-card: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-soft: 0 10px 30px rgba(0,0,0,0.05); --shadow-card: 0 4px 20px rgba(0,0,0,0.08);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Kanit', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: #E0E5EC; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
@@ -35,43 +35,31 @@
             position: absolute; width: 100%; top: 0; pointer-events: none;
         }
 
-        /* --- SCREENS --- */
+        /* --- SCREEN TRANSITIONS --- */
         .screen {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg-color); display: flex; flex-direction: column;
-            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 10;
+            transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 10;
         }
         .screen.hidden { transform: translateX(100%); pointer-events: none; }
         .screen.active { transform: translateX(0); }
-
         .content-scroll { flex: 1; overflow-y: auto; padding-bottom: 100px; scrollbar-width: none; }
         .content-scroll::-webkit-scrollbar { display: none; }
 
-        /* --- HOME --- */
-        .header-home { padding: 70px 24px 20px; }
+        /* ================= SCREEN 1: HOME ================= */
+        .header-home { padding: 60px 24px 20px; }
         .app-name { font-size: 28px; font-weight: 700; color: var(--secondary); margin-bottom: 20px; letter-spacing: -0.5px; }
-        
         .search-wrapper { position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border-radius: 16px; }
-        .search-input { width: 100%; padding: 16px 20px 16px 50px; border: none; border-radius: 16px; background: var(--white); font-size: 15px; outline: none; }
+        .search-input { width: 100%; padding: 16px 20px 16px 50px; border: none; border-radius: 16px; background: var(--white); color: var(--secondary); font-size: 15px; outline: none; }
         .search-icon { position: absolute; left: 20px; top: 16px; color: #aaa; }
 
-        /* --- CATEGORIES (FIXED SCROLL) --- */
-        .categories { 
-            display: flex; gap: 12px; padding: 0 24px; margin-bottom: 24px; 
-            overflow-x: auto; scrollbar-width: none; cursor: grab; /* เพิ่ม cursor */
-        }
-        .categories::-webkit-scrollbar { display: none; }
-        .categories.active { cursor: grabbing; cursor: -webkit-grabbing; }
-
-        .cat-pill { 
-            padding: 8px 18px; background: var(--white); border-radius: 25px; 
-            font-size: 13px; color: #666; white-space: nowrap; font-weight: 500; transition: 0.2s;
-            flex-shrink: 0; /* !! สำคัญมาก: ห้ามหดตัว !! */
-            user-select: none; /* ห้ามคลุมดำเวลาลาก */
-        }
+        /* Categories */
+        .categories { display: flex; gap: 12px; padding: 0 24px; margin-bottom: 24px; overflow-x: auto; scrollbar-width: none; cursor: grab; }
+        .categories.active { cursor: grabbing; }
+        .cat-pill { padding: 8px 18px; background: var(--white); border-radius: 25px; font-size: 13px; color: #666; white-space: nowrap; font-weight: 500; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: 0.2s; flex-shrink: 0; user-select: none; }
         .cat-pill.active { background: var(--primary); color: var(--white); box-shadow: 0 4px 12px rgba(255, 112, 67, 0.3); }
 
-        /* --- CARDS --- */
+        /* Guide Cards */
         .card-list { padding: 0 24px; }
         .guide-card {
             background: var(--white); border-radius: 20px; margin-bottom: 20px;
@@ -82,8 +70,7 @@
         .card-img-box { width: 120px; position: relative; }
         .card-img-box img { width: 100%; height: 100%; object-fit: cover; }
         .badge-verified {
-            position: absolute; top: 10px; left: 10px;
-            background: rgba(255, 255, 255, 0.9); color: #27ae60;
+            position: absolute; top: 10px; left: 10px; background: rgba(255, 255, 255, 0.9); color: #27ae60;
             border-radius: 20px; padding: 5px 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             font-size: 11px; font-weight: 600; display: flex; align-items: center; gap: 4px; backdrop-filter: blur(4px);
         }
@@ -96,7 +83,7 @@
         .price { font-size: 16px; font-weight: 700; color: var(--primary); }
         .price span { font-size: 10px; color: #999; font-weight: 400; }
 
-        /* --- DETAIL --- */
+        /* ================= SCREEN 2: DETAIL PROFILE ================= */
         .detail-hero { height: 300px; position: relative; }
         .detail-hero img { width: 100%; height: 100%; object-fit: cover; }
         .back-btn {
@@ -107,34 +94,38 @@
         .detail-content { background: var(--white); border-top-left-radius: 35px; border-top-right-radius: 35px; margin-top: -40px; padding: 35px 24px 120px; position: relative; min-height: 500px; }
         .detail-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
         .detail-title h1 { font-size: 26px; color: var(--secondary); line-height: 1.2; }
+        .detail-tag { color: #888; font-size: 14px; margin-top: 6px; }
         .detail-rating { background: #FFF9C4; padding: 6px 12px; border-radius: 12px; font-weight: 700; color: #F9A825; display: flex; align-items: center; gap: 5px; font-size: 14px; }
         .section-title { font-size: 18px; font-weight: 600; margin: 30px 0 12px; color: var(--secondary); }
         .story-text { font-size: 15px; color: #555; line-height: 1.7; }
+        .gallery-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; }
+        .gallery-img { width: 110px; height: 110px; border-radius: 16px; object-fit: cover; flex-shrink: 0;}
         .bottom-action-bar {
             position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px 24px 35px; background: var(--white);
             box-shadow: 0 -5px 25px rgba(0,0,0,0.06); display: flex; justify-content: space-between; align-items: center; z-index: 20;
         }
+        .price-total { font-size: 12px; color: #888; margin-bottom: 2px;}
         .price-val { font-size: 22px; font-weight: 700; color: var(--primary); }
-        .btn-book { background: var(--primary); color: white; padding: 16px 32px; border-radius: 18px; font-weight: 600; border: none; box-shadow: 0 8px 20px rgba(255, 112, 67, 0.3); cursor: pointer; }
+        .btn-book { background: var(--primary); color: white; padding: 16px 32px; border-radius: 18px; font-weight: 600; font-size: 16px; border: none; box-shadow: 0 8px 20px rgba(255, 112, 67, 0.3); cursor: pointer; transition: 0.2s; }
+        .btn-book:active { transform: scale(0.96); }
 
-        /* --- CHAT --- */
+        /* ================= SCREEN 3: CHAT ================= */
         .chat-header {
             padding: 60px 20px 15px; background: var(--white); display: flex; align-items: center; gap: 15px;
             box-shadow: 0 2px 15px rgba(0,0,0,0.04); z-index: 20;
         }
         .chat-avatar { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; }
         .chat-area { flex: 1; padding: 20px; background: #F7F9FC; overflow-y: auto; display: flex; flex-direction: column; gap: 15px;}
-        .msg { max-width: 75%; padding: 14px 18px; font-size: 15px; line-height: 1.5; position: relative; word-wrap: break-word; transition: all 0.3s;}
+        .msg { max-width: 75%; padding: 14px 18px; font-size: 15px; line-height: 1.5; position: relative; word-wrap: break-word;}
         .msg-left { background: var(--white); border-radius: 20px 20px 20px 4px; color: #333; align-self: flex-start; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .msg-right { background: var(--primary); border-radius: 20px 20px 4px 20px; color: white; align-self: flex-end; box-shadow: 0 4px 12px rgba(255, 112, 67, 0.2); }
         .typing-indicator { font-size: 12px; color: #888; margin-left: 20px; display: none; font-style: italic;}
-        .chat-input-area {
-            padding: 15px 20px 35px; background: var(--white); display: flex; gap: 12px; align-items: center; border-top: 1px solid #f0f0f0;
-        }
+        .chat-input-area { padding: 15px 20px 35px; background: var(--white); display: flex; gap: 12px; align-items: center; border-top: 1px solid #f0f0f0; }
         .input-msg { flex: 1; background: #f5f5f5; border: none; padding: 14px 18px; border-radius: 25px; outline: none; font-size: 15px; color: #333; }
-        .btn-send { color: var(--primary); font-size: 22px; padding: 10px; cursor: pointer; }
+        .btn-send { color: var(--primary); font-size: 22px; padding: 10px; cursor: pointer; transition: 0.2s; }
+        .btn-send:active { transform: scale(0.9); }
 
-        /* --- BOTTOM NAV --- */
+        /* ================= BOTTOM NAV ================= */
         .bottom-nav {
             position: absolute; bottom: 0; width: 100%; height: 85px; background: var(--white);
             display: flex; justify-content: space-around; align-items: center; padding-bottom: 15px; border-top: 1px solid #f5f5f5; z-index: 100;
@@ -145,9 +136,11 @@
         .nav-chat-btn {
             width: 64px; height: 64px; background: var(--secondary); border-radius: 50%;
             box-shadow: 0 10px 25px rgba(38, 50, 56, 0.3); display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 26px; cursor: pointer; border: 4px solid var(--white);
+            color: white; font-size: 26px; cursor: pointer; transition: transform 0.2s; border: 4px solid var(--white);
         }
+        .nav-chat-btn:active { transform: scale(0.92); }
         .home-indicator { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 135px; height: 5px; background: #000; border-radius: 10px; z-index: 1000; opacity: 0.2; }
+
     </style>
 </head>
 <body>
@@ -165,19 +158,17 @@
                     <h1 class="app-name">FolkFound <span style="color:var(--primary)">.</span></h1>
                     <div class="search-wrapper">
                         <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                        <input type="text" class="search-input" placeholder="ค้นหาชุมชน, ผู้นำเที่ยว...">
+                        <input type="text" class="search-input" placeholder="ค้นหาเพื่อนพาเที่ยว, สถานที่...">
                     </div>
                 </div>
 
                 <div class="categories" id="categories-scroll">
                     <div class="cat-pill active">ทั้งหมด</div>
-                    <div class="cat-pill">🏔️ เดินป่า</div>
-                    <div class="cat-pill">🛶 พายเรือ</div>
-                    <div class="cat-pill">🍜 อาหาร</div>
-                    <div class="cat-pill">🏺 งานฝีมือ</div>
-                    <div class="cat-pill">📸 ถ่ายรูป</div>
-                    <div class="cat-pill">🧘 สปา/นวด</div>
-                    <div class="cat-pill">☕ กาแฟ</div>
+                    <div class="cat-pill">🚗 ขับรถพาเที่ยว</div>
+                    <div class="cat-pill">📸 ถ่ายรูป/คาเฟ่</div>
+                    <div class="cat-pill">🏔️ สายลุย/เดินป่า</div>
+                    <div class="cat-pill">🚤 พาเที่ยวน้ำ</div>
+                    <div class="cat-pill">🍜 ตระเวนกิน</div>
                 </div>
 
                 <div class="card-list" id="guide-list-container">
@@ -202,7 +193,7 @@
                 <div class="detail-content">
                     <div class="detail-header">
                         <div class="detail-title">
-                            <h1 id="detail-name">ชื่อ</h1>
+                            <h1 id="detail-name">ชื่อคนนำเที่ยว</h1>
                             <p id="detail-loc" class="detail-tag"><i class="fa-solid fa-location-dot"></i> สถานที่</p>
                         </div>
                         <div class="detail-rating"><i class="fa-solid fa-star"></i> 4.9</div>
@@ -216,7 +207,7 @@
                     <h3 class="section-title">เกี่ยวกับฉัน</h3>
                     <p class="story-text" id="detail-desc">...</p>
 
-                    <h3 class="section-title">รูปภาพกิจกรรม</h3>
+                    <h3 class="section-title">รูปภาพที่เคยพาเที่ยว</h3>
                     <div class="gallery-row">
                         <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" class="gallery-img">
                         <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" class="gallery-img">
@@ -226,10 +217,10 @@
 
             <div class="bottom-action-bar">
                 <div>
-                    <div class="price-total">ราคาเริ่มต้น</div>
+                    <div class="price-total">เรทค่าดูแลเริ่มต้น</div>
                     <div class="price-val" id="detail-price">฿500</div>
                 </div>
-                <button class="btn-book" onclick="goToChatFromDetail()">ทักแชท / จอง</button>
+                <button class="btn-book" onclick="goToChatFromDetail()">ทักแชทไปเที่ยวกัน</button>
             </div>
         </div>
 
@@ -246,7 +237,7 @@
             </div>
 
             <div class="chat-area" id="message-container">
-            </div>
+                </div>
             
             <div class="typing-indicator" id="typing-indicator">กำลังพิมพ์...</div>
 
@@ -261,39 +252,41 @@
     </div>
 
     <script>
-        // --- 1. ENABLE DRAG SCROLL (ให้เมาส์ลากได้) ---
+        // --- 1. ENABLE DRAG SCROLL ---
         const slider = document.querySelector('.categories');
-        let isDown = false;
-        let startX;
-        let scrollLeft;
-
-        slider.addEventListener('mousedown', (e) => {
-            isDown = true;
-            slider.classList.add('active');
-            startX = e.pageX - slider.offsetLeft;
-            scrollLeft = slider.scrollLeft;
-        });
+        let isDown = false; let startX; let scrollLeft;
+        slider.addEventListener('mousedown', (e) => { isDown = true; slider.classList.add('active'); startX = e.pageX - slider.offsetLeft; scrollLeft = slider.scrollLeft; });
         slider.addEventListener('mouseleave', () => { isDown = false; slider.classList.remove('active'); });
         slider.addEventListener('mouseup', () => { isDown = false; slider.classList.remove('active'); });
-        slider.addEventListener('mousemove', (e) => {
-            if(!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - slider.offsetLeft;
-            const walk = (x - startX) * 2; // Scroll fast
-            slider.scrollLeft = scrollLeft - walk;
-        });
+        slider.addEventListener('mousemove', (e) => { if(!isDown) return; e.preventDefault(); const x = e.pageX - slider.offsetLeft; const walk = (x - startX) * 2; slider.scrollLeft = scrollLeft - walk; });
 
         // --- 2. DATABASE ---
         const dbGuides = [
-            { id: 'g1', name: 'ป้าเพ็ญ (65)', loc: 'ชุมชนอัมพวา', skill: 'ทำขนมไทยโบราณ', price: '฿500', unit: '/วัน', desc: 'สวัสดีจ้ะ ป้าทำขนมไทยมา 40 ปีแล้ว อยากให้เด็กรุ่นใหม่มาลองทำน้ำตาลมะพร้าวแท้ๆ กันนะ', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80', badge: 'Local', badgeColor: '#27ae60', badgeIcon: 'fa-check-circle' },
-            { id: 'g2', name: 'ลุงคำ (58)', loc: 'บ้านแม่กลางหลวง', skill: 'เดินป่า ดอยอินทนนท์', price: '฿800', unit: '/ทริป', desc: 'ผมรู้จักป่าที่นี่ทุกตารางนิ้ว พาไปดูนาขั้นบันไดช่วงที่สวยที่สุด จิบกาแฟคั่วมือที่ผมปลูกเองครับ', img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80', badge: 'Pro', badgeColor: '#2980b9', badgeIcon: 'fa-medal' },
-            { id: 'g3', name: 'น้องฝ้าย (22)', loc: 'ดอยผาฮี้ เชียงราย', skill: 'พาถ่ายรูปคาเฟ่', price: '฿350', unit: '/ชม.', desc: 'ใครสายคอนเทนต์มาทางนี้! ฝ้ายรู้มุมลับๆ บนดอยเยอะมาก รับรองได้รูปปังๆ กลับไปแน่นอนค่ะ', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80', badge: 'Teen', badgeColor: '#8e44ad', badgeIcon: 'fa-camera' }
+            {
+                id: 'g1', name: 'ป้าเพ็ญ (65)', loc: 'ชุมชนอัมพวา', skill: 'พาเที่ยวตลาดน้ำ / นั่งเรือ', price: '฿500', unit: '/วัน',
+                desc: 'สวัสดีจ้ะ ป้าเป็นคนพื้นที่ มีเรือส่วนตัว อยากไปไหนบอกป้าได้เลย เดี๋ยวป้าพาแวะกินของอร่อยๆ ทั่วอัมพวา ดูแลเหมือนลูกหลานจ้ะ',
+                img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80',
+                badge: 'Local', badgeColor: '#27ae60', badgeIcon: 'fa-check-circle'
+            },
+            {
+                id: 'g2', name: 'พี่คำ (45)', loc: 'ดอยอินทนนท์', skill: 'ขับรถพาเที่ยว / เดินป่า', price: '฿800', unit: '/วัน',
+                desc: 'ใครหาคนขับรถพาเที่ยวขึ้นดอย ทักหาพี่ได้เลยครับ ชำนาญทาง ลุยได้ทุกที่ แวะจอดถ่ายรูปได้ตลอดทาง ไม่ต้องเกรงใจครับ',
+                img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80',
+                badge: 'Driver', badgeColor: '#2980b9', badgeIcon: 'fa-car'
+            },
+            {
+                id: 'g3', name: 'น้องฝ้าย (22)', loc: 'ตัวเมืองเชียงราย', skill: 'เพื่อนเที่ยวคาเฟ่ / ตากล้อง', price: '฿350', unit: '/ชม.',
+                desc: 'มาเที่ยวคนเดียวไม่ต้องเหงา! ฝ้ายขับรถพาเที่ยวได้ เป็นเพื่อนคุย เป็นตากล้องให้ด้วย อยากไปคาเฟ่ไหนในเชียงรายบอกมาเลยค่ะ',
+                img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80',
+                badge: 'Buddy', badgeColor: '#8e44ad', badgeIcon: 'fa-camera'
+            }
         ];
 
+        // --- 3. CHAT SESSIONS ---
         const chatSessions = {
-            'g1': [{ sender: 'left', text: 'สวัสดีจ้ะ สนใจมาทำขนมวันไหนจ๊ะ?' }],
-            'g2': [{ sender: 'left', text: 'สวัสดีครับ อยากเดินป่าเส้นทางไหนบอกลุงได้เลย' }],
-            'g3': [{ sender: 'left', text: 'ฮัลโหลล! อยากได้รูปฟีลไหนบอกฝ้ายได้เลยน้า 📸' }],
+            'g1': [{ sender: 'left', text: 'สวัสดีจ้ะ วันนี้สนใจอยากให้ป้าพาไปเที่ยวแบบไหนจ๊ะ? บอกมาได้เลยนะ' }],
+            'g2': [{ sender: 'left', text: 'สวัสดีครับ อยากไปเที่ยวแนวไหน ให้พี่ขับรถไปรับที่พักเลยไหมครับ?' }],
+            'g3': [{ sender: 'left', text: 'สวัสดีค่าา สนใจอยากไปเที่ยวแนวไหนคะ ให้ฝ้ายขับรถไปรับได้น้า 😊' }],
             'support': [{ sender: 'left', text: 'สวัสดีครับ มีอะไรให้ทีมงาน FolkFound ช่วยดูแลไหมครับ?' }]
         };
 
@@ -308,9 +301,7 @@
                 <div class="guide-card" onclick="goToDetail('${g.id}')">
                     <div class="card-img-box">
                         <img src="${g.img}" alt="">
-                        <div class="badge-verified">
-                            <i class="fa-solid ${g.badgeIcon}"></i> ${g.badge}
-                        </div>
+                        <div class="badge-verified" style="color:${g.badgeColor}"><i class="fa-solid ${g.badgeIcon}"></i> ${g.badge}</div>
                     </div>
                     <div class="card-details">
                         <div>
@@ -369,10 +360,12 @@
         }
 
         function handleEnter(e) { if(e.key === 'Enter') sendMessage(); }
+
         function sendMessage() {
             const input = document.getElementById('msg-input');
             const text = input.value.trim();
             if(text === "") return;
+
             addMessage('right', text);
             input.value = "";
             const typing = document.getElementById('typing-indicator');
@@ -383,7 +376,7 @@
                 typing.style.display = 'none';
                 const reply = generateSmartReply(text, currentChatID);
                 addMessage('left', reply);
-            }, 1200);
+            }, 1000 + Math.random() * 1000); // ดีเลย์สุ่ม 1-2 วิ ให้ดูเหมือนคนพิมพ์จริงๆ
         }
 
         function addMessage(sender, text) {
@@ -397,26 +390,79 @@
             container.scrollTop = container.scrollHeight;
         }
 
+        // --- 4. ADVANCED AI LOGIC (ตอบสมจริง จับคีย์เวิร์ด) ---
         function generateSmartReply(input, id) {
-            input = input.toLowerCase();
-            if(input.includes('ราคา') || input.includes('บาท')) {
-                if(id === 'g1') return 'ทำขนมคิดคนละ 500 บาทจ้ะ รวมวัตถุดิบหมดแล้วนะ';
-                if(id === 'g2') return 'ค่าพาเดินป่า 800 บาทครับ ราคานี้รวมกาแฟดริปให้ด้วยครับ';
-                if(id === 'g3') return 'ค่าจ้างฝ้ายชม.ละ 350 ค่ะ ถ่ายรัวๆ ไม่จำกัดรูปเลย';
-                return 'ราคาขึ้นอยู่กับกิจกรรมครับ';
-            }
-            if(input.includes('ที่ไหน') || input.includes('ไกล')) {
-                if(id === 'g1') return 'ป้าอยู่อัมพวานี่เองจ้ะ มาง่าย จอดรถที่วัดแล้วนั่งเรือต่อมาได้เลย';
-                if(id === 'g2') return 'บ้านแม่กลางหลวง ดอยอินทนนท์ครับ อากาศกำลังดีเลย';
-                return 'อยู่ในชุมชนเลยครับ';
-            }
-            if(input.includes('ว่าง') || input.includes('จอง')) return 'ช่วงนี้คิวเริ่มแน่นแล้วครับ สนใจจองล็อกวันไว้ก่อนไหมครับ?';
-            if(input.includes('ขอบคุณ')) return 'ยินดีครับผม 😊';
+            // ทำตัวพิมพ์เล็กและลบเว้นวรรคบางส่วนเพื่อตรวจจับง่ายขึ้น
+            const raw = input;
+            input = input.toLowerCase().replace(/\s+/g, ''); 
             
-            if(id === 'g1') return 'จ้ะ เดี๋ยวป้าเตรียมของรอนะ มีอะไรถามเพิ่มได้เลย';
-            if(id === 'g2') return 'ครับผม สนใจเส้นทางไหนเป็นพิเศษบอกลุงได้นะ';
-            if(id === 'g3') return 'ได้เลยค่าา รีบมาน้า แสงเย็นกำลังสวย!';
-            return 'รับทราบครับ เดี๋ยวตรวจสอบข้อมูลให้นะครับ';
+            // --- หมวด: ของกิน / อาหารตามสั่ง (จากรูปหน้าจอ) ---
+            if(input.includes('กิน') || input.includes('อาหาร') || input.includes('หิว') || input.includes('ตามสั่ง')) {
+                const foodReplies = {
+                    'g1': ['ร้านตามสั่งอร่อยๆ ริมน้ำ ป้ารู้จักเยอะเลย ขับเรือพาไปกินได้จ้ะ ราคาชาวบ้านเลย', 'ได้จ้ะ แถวนี้ของกินเพียบ เดี๋ยวป้าพาแวะกินเตี๋ยวเรือก่อนเลยดีไหม?'],
+                    'g2': ['อาหารตามสั่งตีนดอยมีครับ หรือจะขึ้นไปกินหมูกระทะรับลมหนาวบนดอยดีครับ?', 'ได้ครับ จัดไป! มีร้านประจำผมอยู่ อร่อยและให้เยอะมากครับ'],
+                    'g3': ['กินอะไรดีคะ ตามสั่ง ก๋วยเตี๋ยว หรือแวะคาเฟ่หาขนมกินเล่นก่อนดี? 🍰', 'ร้านตามสั่งได้เลยค่า กินง่ายอยู่ง่าย เซฟงบไปลุยคาเฟ่ต่อเนอะ 😆']
+                };
+                if(foodReplies[id]) return foodReplies[id][Math.floor(Math.random() * foodReplies[id].length)];
+                return 'มีร้านอร่อยแนะนำเยอะเลยครับ อยากทานแนวไหนเป็นพิเศษไหมครับ?';
+            }
+
+            // --- หมวด: ธรรมชาติ / น้ำตก (จากรูปหน้าจอ) ---
+            if(input.includes('น้ำตก') || input.includes('ธรรมชาติ') || input.includes('ภูเขา') || input.includes('เขา')) {
+                if(id === 'g1') return 'แถวอัมพวาไม่มีน้ำตกนะลูก มีแต่คลองกับสวนมะพร้าว เอาเป็นนั่งเรือชมธรรมชาติแทนได้ไหมจ๊ะ?';
+                if(id === 'g2') return 'น้ำตกบนดอยอินทนนท์สวยมากครับ ช่วงนี้น้ำเยอะด้วย เดี๋ยวพี่พาแวะน้ำตกวชิรธารเลย ถ่ายรูปสวยแน่นอน';
+                if(id === 'g3') return 'เชียงรายมีน้ำตกสวยๆ เยอะเลยค่า เดี๋ยวฝ้ายพาไปเก็บบรรยากาศฟีลธรรมชาติ ถ่ายรูปปังๆ ให้เลย 🍃';
+                return 'บรรยากาศธรรมชาติตอนนี้กำลังดีเลยครับ สนใจให้พาไปลุยเลยไหมครับ?';
+            }
+
+            // --- หมวด: ราคา / ค่าใช้จ่าย ---
+            if(input.includes('ราคา') || input.includes('บาท') || input.includes('คิดยังไง') || input.includes('เรท')) {
+                if(id === 'g1') return 'ป้าคิดค่าพาเที่ยว 500 บาทต่อวันจ้ะ รวมค่าเรือป้าแล้วนะ นั่งได้ทั้งวันเลย';
+                if(id === 'g2') return 'พี่คิด 800 บาทต่อวันครับ ขับรถพาเที่ยวให้ทั้งวัน แต่น้ำมันเติมให้ต่างหากตามระยะทางนะครับ';
+                if(id === 'g3') return 'ฝ้ายคิดเรทชั่วโมงละ 350 บาทค่ะ ขับรถพาไปได้ทุกที่ เป็นตากล้องส่วนตัวให้ไม่อั้นเลยย 📸';
+                return 'เรทราคาจะขึ้นอยู่กับระยะเวลาที่ให้ดูแลครับ สอบถามรายละเอียดก่อนได้เลยครับ';
+            }
+            
+            // --- หมวด: การเดินทาง / ไปรับ ---
+            if(input.includes('มารับ') || input.includes('ไปรับ') || input.includes('ที่พัก') || input.includes('โรงแรม')) {
+                if(id === 'g1') return 'หนูพักอยู่รีสอร์ทไหนจ๊ะ เดี๋ยวป้าเอาเรือไปรับถึงท่าน้ำของที่พักได้เลย สะดวกมากๆ';
+                if(id === 'g2') return 'ส่งโลเคชั่นที่พักมาได้เลยครับ เดี๋ยวพี่เอารถกระบะไปรับถึงหน้าโรงแรมเลย ขนของสบายครับ';
+                if(id === 'g3') return 'พักในเมืองหรือนอกเมืองคะ? ส่งพิกัดมาได้เลย เดี๋ยวฝ้ายขับรถไปรับหน้าล็อบบี้เลยค่า 🚗💨';
+                return 'ส่งโลเคชั่นมาได้เลยครับ เดี๋ยวเราไปรับถึงที่เลยครับ';
+            }
+
+            // --- หมวด: ทักทายตอบรับทั่วไป ---
+            if(input.includes('จอง') || input.includes('คิว') || input.includes('วันไหน')) return 'จะให้ไปดูแลวันไหน เวลาไหน พิมพ์บอกไว้ได้เลยครับ/ค่ะ เดี๋ยวเช็คคิวให้เลย';
+            if(input.includes('ขอบคุณ') || input.includes('โอเค') || input.includes('ok') || input.includes('จัดไป')) {
+                const thanks = ['ยินดีเลยจ้ะ ไว้เจอกันนะ', 'รับทราบครับผม เตรียมตัวลุยได้เลย!', 'โอเคค่าา แพลนชุดรอไว้ได้เลยน้าา ✨'];
+                return thanks[Math.floor(Math.random() * thanks.length)];
+            }
+            
+            // --- FALLBACK (ถ้าพิมพ์คำแปลกๆ ที่บอทไม่รู้จัก จะสุ่มตอบแบบเนียนๆ ไม่ให้ซ้ำ) ---
+            const fallbacks = {
+                'g1': [
+                    `ป้าอ่านไม่ค่อยถนัด พิมพ์มาใหม่ได้ไหมลูก หรืออยากไปที่ไหนเป็นพิเศษพิมพ์ชื่อที่เที่ยวมาเลยนะ`,
+                    `"${raw}" หรอจ๊ะ... น่าสนใจนะ เดี๋ยวป้าลองพาไปดู แต่อยากแวะไหนอีกบอกได้เลยนะ`,
+                    `เอาเป็นว่าหนูมาถึงอัมพวาเมื่อไหร่ โทรหาป้าได้เลยนะ เดี๋ยวป้าจัดการให้หมดจ้ะ`
+                ],
+                'g2': [
+                    `เข้าใจครับ ไว้พี่พาแวะดูละกันนะ มีแพลนที่อยากไปอีกไหมครับ?`,
+                    `ได้เลยครับสบายมาก ทางบนดอยพี่ชำนาญอยู่แล้ว ไว้ใจได้เลย`,
+                    `อืมมม... "${raw}" น่าสนใจครับ เดี๋ยวพี่ลองจัดเส้นทางให้มันผ่านจุดนี้ละกันนะครับ`
+                ],
+                'g3': [
+                    `"${raw}" จัดไปค่าา! ฝ้ายตามใจคนเที่ยวอยู่แล้ว อยากแวะไหนรีเควสมาได้ตล๊อดดด`,
+                    `รับทราบค่าา เดี๋ยวฝ้ายทำการบ้านแพลนที่เที่ยวเพิ่มให้นะคะ มีมุมไหนอยากไปอีกบอกได้เลยน้า`,
+                    `งื้อออ น่าไปมากก! เดี๋ยวพาไปตะลุยเลยค่ะ เตรียมพรอพถ่ายรูปมาให้พร้อมละกันน้า 👗`
+                ],
+                'support': [
+                    'แอดมินรับทราบครับ มีปัญหาการใช้งานส่วนไหนแจ้งเพิ่มเติมได้เลยนะครับ',
+                    'หากต้องการจองไกด์ สามารถกดเข้าที่โปรไฟล์ไกด์แล้วทักแชทได้โดยตรงเลยนะครับ'
+                ]
+            };
+
+            const fallbackList = fallbacks[id] || fallbacks['support'];
+            return fallbackList[Math.floor(Math.random() * fallbackList.length)];
         }
 
         function goBack() {
