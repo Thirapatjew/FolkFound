@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FolkFound - Smart AI Chat</title>
+    <title>FolkFound - Full Interactive App</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -12,7 +12,8 @@
         :root {
             --primary: #FF7043; --primary-dark: #E64A19; --secondary: #263238;
             --bg-color: #F7F9FC; --white: #FFFFFF;
-            --shadow-soft: 0 10px 30px rgba(0,0,0,0.05); --shadow-card: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-soft: 0 10px 30px rgba(0,0,0,0.05);
+            --shadow-card: 0 4px 20px rgba(0,0,0,0.08);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Kanit', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: #E0E5EC; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
@@ -47,50 +48,34 @@
         .content-scroll::-webkit-scrollbar { display: none; }
 
         /* ================= SCREEN 1: HOME ================= */
-        .header-home { padding: 60px 24px 20px; }
+        .header-home { padding: 70px 24px 20px; }
         .app-name { font-size: 28px; font-weight: 700; color: var(--secondary); margin-bottom: 20px; letter-spacing: -0.5px; }
         .search-wrapper { position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border-radius: 16px; }
         .search-input { width: 100%; padding: 16px 20px 16px 50px; border: none; border-radius: 16px; background: var(--white); color: var(--secondary); font-size: 15px; outline: none; }
         .search-icon { position: absolute; left: 20px; top: 16px; color: #aaa; }
-
-        /* Categories */
         .categories { display: flex; gap: 12px; padding: 0 24px; margin-bottom: 24px; overflow-x: auto; scrollbar-width: none; cursor: grab; }
         .categories.active { cursor: grabbing; }
-        .cat-pill { padding: 8px 18px; background: var(--white); border-radius: 25px; font-size: 13px; color: #666; white-space: nowrap; font-weight: 500; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: 0.2s; flex-shrink: 0; user-select: none; }
+        .cat-pill { padding: 8px 18px; background: var(--white); border-radius: 25px; font-size: 13px; color: #666; white-space: nowrap; font-weight: 500; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: 0.2s; flex-shrink: 0; user-select: none; cursor: pointer;}
         .cat-pill.active { background: var(--primary); color: var(--white); box-shadow: 0 4px 12px rgba(255, 112, 67, 0.3); }
-
-        /* Guide Cards */
         .card-list { padding: 0 24px; }
-        .guide-card {
-            background: var(--white); border-radius: 20px; margin-bottom: 20px;
-            box-shadow: var(--shadow-card); display: flex; overflow: hidden;
-            height: 140px; transition: transform 0.1s; cursor: pointer; position: relative;
-        }
+        .guide-card { background: var(--white); border-radius: 20px; margin-bottom: 20px; box-shadow: var(--shadow-card); display: flex; overflow: hidden; height: 140px; transition: transform 0.1s; cursor: pointer; position: relative; }
         .guide-card:active { transform: scale(0.98); }
-        .card-img-box { width: 120px; position: relative; }
+        .card-img-box { width: 120px; position: relative; flex-shrink: 0;}
         .card-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .badge-verified {
-            position: absolute; top: 10px; left: 10px; background: rgba(255, 255, 255, 0.9); color: #27ae60;
-            border-radius: 20px; padding: 5px 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            font-size: 11px; font-weight: 600; display: flex; align-items: center; gap: 4px; backdrop-filter: blur(4px);
-        }
-        .card-details { flex: 1; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; }
-        .guide-name { font-size: 18px; font-weight: 700; color: var(--secondary); }
-        .guide-loc { font-size: 12px; color: #888; display: flex; align-items: center; gap: 4px; margin-top: 4px; }
+        .card-details { flex: 1; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;}
+        .guide-name { font-size: 18px; font-weight: 700; color: var(--secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .guide-loc { font-size: 12px; color: #888; display: flex; align-items: center; gap: 4px; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
         .guide-skill { font-size: 11px; color: var(--primary-dark); background: #FFCCBC; padding: 4px 10px; border-radius: 6px; width: fit-content; margin-top: 8px; font-weight: 500; }
         .guide-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
         .rating { font-size: 12px; font-weight: 600; color: #333; display: flex; align-items: center; gap: 3px;}
         .price { font-size: 16px; font-weight: 700; color: var(--primary); }
         .price span { font-size: 10px; color: #999; font-weight: 400; }
+        .empty-state { text-align: center; padding: 40px 20px; color: #888; font-size: 14px; }
 
         /* ================= SCREEN 2: DETAIL PROFILE ================= */
         .detail-hero { height: 300px; position: relative; }
         .detail-hero img { width: 100%; height: 100%; object-fit: cover; }
-        .back-btn {
-            position: absolute; top: 50px; left: 24px; width: 44px; height: 44px; background: rgba(255,255,255,0.9);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            color: #333; font-size: 18px; cursor: pointer; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
+        .back-btn { position: absolute; top: 50px; left: 24px; width: 44px; height: 44px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #333; font-size: 18px; cursor: pointer; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .detail-content { background: var(--white); border-top-left-radius: 35px; border-top-right-radius: 35px; margin-top: -40px; padding: 35px 24px 120px; position: relative; min-height: 500px; }
         .detail-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
         .detail-title h1 { font-size: 26px; color: var(--secondary); line-height: 1.2; }
@@ -98,22 +83,16 @@
         .detail-rating { background: #FFF9C4; padding: 6px 12px; border-radius: 12px; font-weight: 700; color: #F9A825; display: flex; align-items: center; gap: 5px; font-size: 14px; }
         .section-title { font-size: 18px; font-weight: 600; margin: 30px 0 12px; color: var(--secondary); }
         .story-text { font-size: 15px; color: #555; line-height: 1.7; }
-        .gallery-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; }
+        .gallery-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none;}
+        .gallery-row::-webkit-scrollbar { display: none; }
         .gallery-img { width: 110px; height: 110px; border-radius: 16px; object-fit: cover; flex-shrink: 0;}
-        .bottom-action-bar {
-            position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px 24px 35px; background: var(--white);
-            box-shadow: 0 -5px 25px rgba(0,0,0,0.06); display: flex; justify-content: space-between; align-items: center; z-index: 20;
-        }
-        .price-total { font-size: 12px; color: #888; margin-bottom: 2px;}
+        .bottom-action-bar { position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px 24px 35px; background: var(--white); box-shadow: 0 -5px 25px rgba(0,0,0,0.06); display: flex; justify-content: space-between; align-items: center; z-index: 20; }
         .price-val { font-size: 22px; font-weight: 700; color: var(--primary); }
         .btn-book { background: var(--primary); color: white; padding: 16px 32px; border-radius: 18px; font-weight: 600; font-size: 16px; border: none; box-shadow: 0 8px 20px rgba(255, 112, 67, 0.3); cursor: pointer; transition: 0.2s; }
         .btn-book:active { transform: scale(0.96); }
 
-        /* ================= SCREEN 3: CHAT ================= */
-        .chat-header {
-            padding: 60px 20px 15px; background: var(--white); display: flex; align-items: center; gap: 15px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.04); z-index: 20;
-        }
+        /* ================= SCREEN 3 & 4: CHAT ================= */
+        .chat-header { padding: 60px 20px 15px; background: var(--white); display: flex; align-items: center; gap: 15px; box-shadow: 0 2px 15px rgba(0,0,0,0.04); z-index: 20; }
         .chat-avatar { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; }
         .chat-area { flex: 1; padding: 20px; background: #F7F9FC; overflow-y: auto; display: flex; flex-direction: column; gap: 15px;}
         .msg { max-width: 75%; padding: 14px 18px; font-size: 15px; line-height: 1.5; position: relative; word-wrap: break-word;}
@@ -124,11 +103,79 @@
         .input-msg { flex: 1; background: #f5f5f5; border: none; padding: 14px 18px; border-radius: 25px; outline: none; font-size: 15px; color: #333; }
         .btn-send { color: var(--primary); font-size: 22px; padding: 10px; cursor: pointer; transition: 0.2s; }
         .btn-send:active { transform: scale(0.9); }
+        .chat-list-container { padding-top: 10px; }
+        .chat-list-item { display: flex; align-items: center; gap: 15px; padding: 16px 24px; border-bottom: 1px solid #f0f0f0; background: var(--white); cursor: pointer; transition: 0.2s; }
+        .chat-list-item:active { background: #f9f9f9; }
+        .chat-list-avatar-wrap { position: relative; }
+        .chat-list-avatar { width: 54px; height: 54px; border-radius: 50%; object-fit: cover; }
+        .online-dot { position: absolute; bottom: 2px; right: 2px; width: 12px; height: 12px; background: #27ae60; border-radius: 50%; border: 2px solid var(--white); }
+        .chat-list-info { flex: 1; overflow: hidden; }
+        .chat-list-name { font-size: 16px; font-weight: 600; color: var(--secondary); margin-bottom: 2px; display: flex; justify-content: space-between;}
+        .chat-list-preview { font-size: 14px; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        /* ================= SCREEN 5: USER PROFILE ================= */
+        .profile-container { padding: 0 24px; }
+        .profile-header-card {
+            background: var(--white); padding: 24px; border-radius: 24px;
+            display: flex; align-items: center; gap: 20px; box-shadow: var(--shadow-card);
+            margin-bottom: 24px; position: relative;
+        }
+        .profile-user-img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 3px solid #f0f0f0;}
+        .profile-user-info { flex: 1; overflow: hidden; }
+        .profile-user-info h2 { font-size: 20px; font-weight: 700; color: var(--secondary); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .profile-user-info p { font-size: 14px; color: var(--primary); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .edit-profile-btn { 
+            position: absolute; top: 20px; right: 20px; background: #f5f5f5; border: none; 
+            width: 36px; height: 36px; border-radius: 50%; color: #555; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center;
+        }
+        .edit-profile-btn:active { transform: scale(0.9); background: #e0e0e0; }
+        .profile-stats { display: flex; gap: 12px; margin-bottom: 24px; }
+        .stat-box { flex: 1; background: var(--white); padding: 16px 10px; border-radius: 20px; text-align: center; box-shadow: var(--shadow-soft); }
+        .stat-box h3 { font-size: 22px; font-weight: 700; color: var(--secondary); }
+        .stat-box p { font-size: 12px; color: #888; margin-top: 4px; }
+        .profile-menu-list { background: var(--white); border-radius: 24px; padding: 10px 0; box-shadow: var(--shadow-soft); }
+        .menu-item { display: flex; align-items: center; gap: 15px; padding: 16px 20px; font-size: 16px; color: var(--secondary); font-weight: 500; cursor: pointer; transition: 0.2s; }
+        .menu-item:active { background: #f9f9f9; }
+        .menu-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+        .menu-arrow { margin-left: auto; color: #ccc; font-size: 14px; }
+
+        /* ================= SUB SCREENS ================= */
+        .sub-header {
+            padding: 60px 24px 15px; background: var(--white); display: flex; align-items: center; gap: 15px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.04); z-index: 20; position: relative;
+        }
+        .sub-header h2 { font-size: 18px; font-weight: 700; color: var(--secondary); margin: 0 auto; padding-right: 36px; }
+        
+        /* Edit Profile Form */
+        .edit-form { padding: 24px; }
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; font-size: 14px; color: #666; margin-bottom: 8px; font-weight: 500; }
+        .form-input { width: 100%; padding: 14px 16px; border: 1px solid #ddd; border-radius: 12px; font-size: 15px; outline: none; background: var(--white); transition: 0.2s; }
+        .form-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(255, 112, 67, 0.1); }
+        .save-btn { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 16px; font-size: 16px; font-weight: 600; margin-top: 10px; cursor: pointer; box-shadow: 0 8px 20px rgba(255, 112, 67, 0.3); transition: 0.2s;}
+        .save-btn:active { transform: scale(0.98); }
+
+        /* Camera Badge for Edit Profile */
+        .camera-badge {
+            position: absolute; bottom: 0; right: 0; width: 34px; height: 34px;
+            background: var(--primary); color: var(--white); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            border: 3px solid var(--white); box-shadow: 0 2px 8px rgba(0,0,0,0.2); cursor: pointer;
+        }
+        .camera-badge:active { transform: scale(0.9); }
+
+        /* Settings Toggle */
+        .setting-item { display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; border-bottom: 1px solid #f0f0f0; background: var(--white); }
+        .setting-label { font-size: 16px; color: var(--secondary); font-weight: 500; }
+        .toggle-switch { width: 50px; height: 28px; background: #ddd; border-radius: 20px; position: relative; cursor: pointer; transition: 0.3s; }
+        .toggle-switch.on { background: #27ae60; }
+        .toggle-circle { width: 24px; height: 24px; background: white; border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.2);}
+        .toggle-switch.on .toggle-circle { left: 24px; }
 
         /* ================= BOTTOM NAV ================= */
         .bottom-nav {
-            position: absolute; bottom: 0; width: 100%; height: 85px; background: var(--white);
-            display: flex; justify-content: space-around; align-items: center; padding-bottom: 15px; border-top: 1px solid #f5f5f5; z-index: 100;
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 85px; background: var(--white);
+            display: flex; justify-content: space-around; align-items: center; padding-bottom: 15px; border-top: 1px solid #f5f5f5; z-index: 100; transition: transform 0.3s;
         }
         .nav-item { color: #C0C0C0; font-size: 26px; transition: 0.2s; cursor: pointer;}
         .nav-item.active { color: var(--primary); }
@@ -138,9 +185,9 @@
             box-shadow: 0 10px 25px rgba(38, 50, 56, 0.3); display: flex; align-items: center; justify-content: center;
             color: white; font-size: 26px; cursor: pointer; transition: transform 0.2s; border: 4px solid var(--white);
         }
+        .nav-chat-btn.active { background: var(--primary); }
         .nav-chat-btn:active { transform: scale(0.92); }
         .home-indicator { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 135px; height: 5px; background: #000; border-radius: 10px; z-index: 1000; opacity: 0.2; }
-
     </style>
 </head>
 <body>
@@ -158,29 +205,19 @@
                     <h1 class="app-name">FolkFound <span style="color:var(--primary)">.</span></h1>
                     <div class="search-wrapper">
                         <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                        <input type="text" class="search-input" placeholder="ค้นหาเพื่อนพาเที่ยว, สถานที่...">
+                        <input type="text" id="search-input" class="search-input" placeholder="ค้นหา..." oninput="handleSearch()">
                     </div>
                 </div>
 
                 <div class="categories" id="categories-scroll">
-                    <div class="cat-pill active">ทั้งหมด</div>
-                    <div class="cat-pill">🚗 ขับรถพาเที่ยว</div>
-                    <div class="cat-pill">📸 ถ่ายรูป/คาเฟ่</div>
-                    <div class="cat-pill">🏔️ สายลุย/เดินป่า</div>
-                    <div class="cat-pill">🚤 พาเที่ยวน้ำ</div>
-                    <div class="cat-pill">🍜 ตระเวนกิน</div>
+                    <div class="cat-pill active" onclick="filterCategory('ทั้งหมด', this)">ทั้งหมด</div>
+                    <div class="cat-pill" onclick="filterCategory('กว๊านพะเยา', this)">⛵ กว๊านพะเยา</div>
+                    <div class="cat-pill" onclick="filterCategory('ภูลังกา', this)">🏔️ ภูลังกา</div>
+                    <div class="cat-pill" onclick="filterCategory('คาเฟ่', this)">☕ คาเฟ่หน้ามอ</div>
+                    <div class="cat-pill" onclick="filterCategory('ของกิน', this)">🍜 ของกิน/ปลาจุ่ม</div>
                 </div>
 
-                <div class="card-list" id="guide-list-container">
-                    </div>
-            </div>
-            
-            <div class="bottom-nav">
-                <i class="fa-solid fa-compass nav-item active"></i>
-                <div class="nav-chat-wrap" onclick="goToChat('Support')">
-                    <div class="nav-chat-btn"><i class="fa-solid fa-comment-dots"></i></div>
-                </div>
-                <i class="fa-solid fa-user nav-item"></i>
+                <div class="card-list" id="guide-list-container"></div>
             </div>
         </div>
 
@@ -201,17 +238,14 @@
 
                     <div style="display:flex; gap:10px; margin-bottom:24px;">
                         <span id="detail-skill" style="background:#f0f0f0; padding:6px 12px; border-radius:8px; font-size:12px; color:#555;">Skill</span>
-                        <span style="background:#E8F5E9; padding:6px 12px; border-radius:8px; font-size:12px; color:#2E7D32;">✅ ยืนยันตัวตนแล้ว</span>
+                        <span style="background:#E8F5E9; padding:6px 12px; border-radius:8px; font-size:12px; color:#2E7D32;">✅ คนพะเยาแต้ๆ</span>
                     </div>
 
                     <h3 class="section-title">เกี่ยวกับฉัน</h3>
                     <p class="story-text" id="detail-desc">...</p>
 
-                    <h3 class="section-title">รูปภาพที่เคยพาเที่ยว</h3>
-                    <div class="gallery-row">
-                        <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" class="gallery-img">
-                        <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" class="gallery-img">
-                    </div>
+                    <h3 class="section-title">สถานที่ที่ชำนาญ</h3>
+                    <div class="gallery-row" id="detail-gallery"></div>
                 </div>
             </div>
 
@@ -221,6 +255,16 @@
                     <div class="price-val" id="detail-price">฿500</div>
                 </div>
                 <button class="btn-book" onclick="goToChatFromDetail()">ทักแชทไปเที่ยวกัน</button>
+            </div>
+        </div>
+
+        <div class="screen hidden" id="screen-chat-list">
+            <div class="content-scroll">
+                <div class="header-home" style="padding-bottom: 10px;">
+                    <h1 class="app-name">กล่องข้อความ <span style="color:var(--primary)">.</span></h1>
+                </div>
+                <div class="chat-list-container" id="chat-list-render">
+                    </div>
             </div>
         </div>
 
@@ -235,17 +279,196 @@
                     </div>
                 </div>
             </div>
-
-            <div class="chat-area" id="message-container">
-                </div>
-            
+            <div class="chat-area" id="message-container"></div>
             <div class="typing-indicator" id="typing-indicator">กำลังพิมพ์...</div>
-
             <div class="chat-input-area">
                 <i class="fa-solid fa-plus" style="color:var(--primary); font-size:20px;"></i>
                 <input type="text" class="input-msg" placeholder="พิมพ์ข้อความ..." id="msg-input" onkeypress="handleEnter(event)">
                 <i class="fa-solid fa-paper-plane btn-send" onclick="sendMessage()"></i>
             </div>
+        </div>
+
+        <div class="screen hidden" id="screen-profile">
+            <div class="content-scroll">
+                <div class="header-home" style="padding-bottom: 10px;">
+                    <h1 class="app-name">บัญชีของฉัน <span style="color:var(--primary)">.</span></h1>
+                </div>
+                <div class="profile-container">
+                    <div class="profile-header-card">
+                        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" class="profile-user-img" id="display-user-img">
+                        <div class="profile-user-info">
+                            <h2 id="display-user-name">คุณลูกค้า (Guest)</h2>
+                            <p id="display-user-tag"><i class="fa-solid fa-plane-departure"></i> สายเที่ยวชิลๆ</p>
+                        </div>
+                        <button class="edit-profile-btn" onclick="openSubScreen('screen-edit-profile')"><i class="fa-solid fa-pen"></i></button>
+                    </div>
+
+                    <div class="profile-stats">
+                        <div class="stat-box"><h3>3</h3><p>ทริปที่ไป</p></div>
+                        <div class="stat-box"><h3>5</h3><p>รีวิว</p></div>
+                        <div class="stat-box"><h3 style="color:var(--primary);">2</h3><p>คูปอง</p></div>
+                    </div>
+
+                    <div class="profile-menu-list">
+                        <div class="menu-item" onclick="openSubScreen('screen-my-trips')">
+                            <div class="menu-icon" style="background:#E3F2FD; color:#1976D2;"><i class="fa-solid fa-calendar-check"></i></div>
+                            ทริปของฉัน <i class="fa-solid fa-chevron-right menu-arrow"></i>
+                        </div>
+                        <div class="menu-item" onclick="openSubScreen('screen-favorites')">
+                            <div class="menu-icon" style="background:#FCE4EC; color:#C2185B;"><i class="fa-solid fa-heart"></i></div>
+                            ไกด์คนโปรด <i class="fa-solid fa-chevron-right menu-arrow"></i>
+                        </div>
+                        <div class="menu-item" onclick="openSubScreen('screen-settings')">
+                            <div class="menu-icon" style="background:#E8F5E9; color:#388E3C;"><i class="fa-solid fa-gear"></i></div>
+                            ตั้งค่าบัญชี <i class="fa-solid fa-chevron-right menu-arrow"></i>
+                        </div>
+                        <div class="menu-item" onclick="openSubScreen('screen-admin-contact')">
+                            <div class="menu-icon" style="background:#FFF3E0; color:#E64A19;"><i class="fa-solid fa-headset"></i></div>
+                            ติดต่อแอดมิน <i class="fa-solid fa-chevron-right menu-arrow"></i>
+                        </div>
+                        <div class="menu-item" style="color: #d32f2f;" onclick="alert('ออกจากระบบสำเร็จ (กลับสู่หน้า Login ในอนาคต)')">
+                            <div class="menu-icon" style="background:#FFEBEE; color:#d32f2f;"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
+                            ออกจากระบบ
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen hidden" id="screen-edit-profile">
+            <div class="sub-header">
+                <div class="back-btn" style="position:static; width:36px; height:36px; background:#f0f0f0; box-shadow:none;" onclick="goBack()"><i class="fa-solid fa-arrow-left"></i></div>
+                <h2>แก้ไขโปรไฟล์</h2>
+            </div>
+            <div class="content-scroll edit-form">
+                
+                <div style="position:relative; width:100px; height:100px; margin: 0 auto 30px;">
+                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" id="preview-user-img" style="width:100px; height:100px; border-radius:50%; object-fit:cover; border: 4px solid var(--white); box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                    
+                    <div class="camera-badge" onclick="document.getElementById('image-upload').click()">
+                        <i class="fa-solid fa-camera" style="font-size: 14px;"></i>
+                    </div>
+                    
+                    <input type="file" id="image-upload" accept="image/*" style="display:none;" onchange="previewImage(event)">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">ชื่อที่แสดง</label>
+                    <input type="text" id="input-user-name" class="form-input" value="คุณลูกค้า (Guest)">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">สเตตัส / สไตล์การเที่ยว</label>
+                    <input type="text" id="input-user-tag" class="form-input" value="สายเที่ยวชิลๆ">
+                </div>
+                <button class="save-btn" onclick="saveProfile()">บันทึกข้อมูล</button>
+            </div>
+        </div>
+
+        <div class="screen hidden" id="screen-my-trips">
+            <div class="sub-header">
+                <div class="back-btn" style="position:static; width:36px; height:36px; background:#f0f0f0; box-shadow:none;" onclick="goBack()"><i class="fa-solid fa-arrow-left"></i></div>
+                <h2>ทริปของฉัน</h2>
+            </div>
+            <div class="content-scroll" style="padding: 24px;">
+                <div style="background:var(--white); border-radius:16px; padding:16px; margin-bottom:15px; box-shadow:var(--shadow-card); display:flex; gap:15px;">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" style="width:60px; height:60px; border-radius:12px; object-fit:cover;">
+                    <div>
+                        <h4 style="font-size:16px; color:var(--secondary);">กว๊านพะเยา กับ ป้าหน่อย</h4>
+                        <p style="font-size:12px; color:#888; margin-top:4px;"><i class="fa-regular fa-calendar"></i> 12 ต.ค. 2566</p>
+                        <span style="font-size:10px; background:#E8F5E9; color:#2E7D32; padding:2px 8px; border-radius:4px; margin-top:6px; display:inline-block;">เสร็จสิ้น</span>
+                    </div>
+                </div>
+                <div style="background:var(--white); border-radius:16px; padding:16px; margin-bottom:15px; box-shadow:var(--shadow-card); display:flex; gap:15px;">
+                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" style="width:60px; height:60px; border-radius:12px; object-fit:cover;">
+                    <div>
+                        <h4 style="font-size:16px; color:var(--secondary);">ภูลังกา กับ พี่สิงห์</h4>
+                        <p style="font-size:12px; color:#888; margin-top:4px;"><i class="fa-regular fa-calendar"></i> 20 พ.ย. 2566</p>
+                        <span style="font-size:10px; background:#E8F5E9; color:#2E7D32; padding:2px 8px; border-radius:4px; margin-top:6px; display:inline-block;">เสร็จสิ้น</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen hidden" id="screen-favorites">
+            <div class="sub-header">
+                <div class="back-btn" style="position:static; width:36px; height:36px; background:#f0f0f0; box-shadow:none;" onclick="goBack()"><i class="fa-solid fa-arrow-left"></i></div>
+                <h2>ไกด์คนโปรด</h2>
+            </div>
+            <div class="content-scroll" style="padding: 24px;" id="fav-list-container">
+                </div>
+        </div>
+
+        <div class="screen hidden" id="screen-settings">
+            <div class="sub-header">
+                <div class="back-btn" style="position:static; width:36px; height:36px; background:#f0f0f0; box-shadow:none;" onclick="goBack()"><i class="fa-solid fa-arrow-left"></i></div>
+                <h2>ตั้งค่าบัญชี</h2>
+            </div>
+            <div class="content-scroll" style="background:var(--white);">
+                <div class="setting-item">
+                    <span class="setting-label">การแจ้งเตือนข้อความ</span>
+                    <div class="toggle-switch on" onclick="this.classList.toggle('on')"><div class="toggle-circle"></div></div>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">แจ้งเตือนโปรโมชั่น</span>
+                    <div class="toggle-switch" onclick="this.classList.toggle('on')"><div class="toggle-circle"></div></div>
+                </div>
+                <div class="setting-item" style="cursor:pointer;" onclick="alert('เปลี่ยนภาษา: รองรับ ไทย / English')">
+                    <span class="setting-label">ภาษา (Language)</span>
+                    <span style="color:#888; font-size:14px;">ไทย <i class="fa-solid fa-chevron-right" style="margin-left:5px;"></i></span>
+                </div>
+                <div class="setting-item" style="cursor:pointer;" onclick="alert('แสดงหน้าข้อกำหนดและเงื่อนไข')">
+                    <span class="setting-label">ข้อกำหนดและเงื่อนไข</span>
+                    <i class="fa-solid fa-chevron-right" style="color:#ccc;"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen hidden" id="screen-admin-contact">
+            <div class="sub-header">
+                <div class="back-btn" style="position:static; width:36px; height:36px; background:#f0f0f0; box-shadow:none;" onclick="goBack()"><i class="fa-solid fa-arrow-left"></i></div>
+                <h2>ติดต่อแอดมิน</h2>
+            </div>
+            <div class="content-scroll" style="padding: 24px;">
+                <div style="background:var(--white); border-radius:16px; padding:24px; text-align:center; box-shadow:var(--shadow-card);">
+                    <div style="width:80px; height:80px; background:#FFF3E0; color:#E64A19; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:36px; margin:0 auto 16px;">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <h3 style="color:var(--secondary); margin-bottom:8px;">ศูนย์ช่วยเหลือ FolkFound</h3>
+                    <p style="color:#888; font-size:14px; margin-bottom:20px;">มีปัญหาการใช้งาน หรือต้องการสอบถามข้อมูลเพิ่มเติม ติดต่อเราได้ตลอดเวลา</p>
+                    
+                    <div style="display:flex; flex-direction:column; gap:12px; text-align:left;">
+                        <div style="background:#F7F9FC; padding:12px 16px; border-radius:12px; display:flex; align-items:center; gap:12px; cursor:pointer;" onclick="alert('เปิดแอปพลิเคชัน Line')">
+                            <i class="fa-brands fa-line" style="color:#00B900; font-size:28px;"></i>
+                            <div>
+                                <div style="font-size:12px; color:#888;">Line Official</div>
+                                <div style="font-weight:600; color:var(--secondary);">@FolkFound</div>
+                            </div>
+                        </div>
+                        <div style="background:#F7F9FC; padding:12px 16px; border-radius:12px; display:flex; align-items:center; gap:12px; cursor:pointer;" onclick="alert('โทรออก: 099-XXX-XXXX')">
+                            <i class="fa-solid fa-phone" style="color:var(--primary); font-size:22px; margin-left:4px;"></i>
+                            <div style="margin-left:2px;">
+                                <div style="font-size:12px; color:#888;">เบอร์โทรศัพท์</div>
+                                <div style="font-weight:600; color:var(--secondary);">099-XXX-XXXX</div>
+                            </div>
+                        </div>
+                        <div style="background:#F7F9FC; padding:12px 16px; border-radius:12px; display:flex; align-items:center; gap:12px; cursor:pointer;" onclick="alert('เปิดอีเมล')">
+                            <i class="fa-solid fa-envelope" style="color:#FBC02D; font-size:22px; margin-left:4px;"></i>
+                            <div style="margin-left:2px;">
+                                <div style="font-size:12px; color:#888;">อีเมล</div>
+                                <div style="font-weight:600; color:var(--secondary);">support@folkfound.com</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-nav" id="main-bottom-nav">
+            <i class="fa-solid fa-compass nav-item active" id="nav-icon-home" onclick="openHome()"></i>
+            <div class="nav-chat-wrap" onclick="openChatList()">
+                <div class="nav-chat-btn" id="nav-icon-chat"><i class="fa-solid fa-comment-dots"></i></div>
+            </div>
+            <i class="fa-solid fa-user nav-item" id="nav-icon-profile" onclick="openProfile()"></i>
         </div>
 
         <div class="home-indicator"></div>
@@ -262,66 +485,128 @@
 
         // --- 2. DATABASE ---
         const dbGuides = [
-            {
-                id: 'g1', name: 'ป้าเพ็ญ (65)', loc: 'ชุมชนอัมพวา', skill: 'พาเที่ยวตลาดน้ำ / นั่งเรือ', price: '฿500', unit: '/วัน',
-                desc: 'สวัสดีจ้ะ ป้าเป็นคนพื้นที่ มีเรือส่วนตัว อยากไปไหนบอกป้าได้เลย เดี๋ยวป้าพาแวะกินของอร่อยๆ ทั่วอัมพวา ดูแลเหมือนลูกหลานจ้ะ',
-                img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80',
-                badge: 'Local', badgeColor: '#27ae60', badgeIcon: 'fa-check-circle'
-            },
-            {
-                id: 'g2', name: 'พี่คำ (45)', loc: 'ดอยอินทนนท์', skill: 'ขับรถพาเที่ยว / เดินป่า', price: '฿800', unit: '/วัน',
-                desc: 'ใครหาคนขับรถพาเที่ยวขึ้นดอย ทักหาพี่ได้เลยครับ ชำนาญทาง ลุยได้ทุกที่ แวะจอดถ่ายรูปได้ตลอดทาง ไม่ต้องเกรงใจครับ',
-                img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80',
-                badge: 'Driver', badgeColor: '#2980b9', badgeIcon: 'fa-car'
-            },
-            {
-                id: 'g3', name: 'น้องฝ้าย (22)', loc: 'ตัวเมืองเชียงราย', skill: 'เพื่อนเที่ยวคาเฟ่ / ตากล้อง', price: '฿350', unit: '/ชม.',
-                desc: 'มาเที่ยวคนเดียวไม่ต้องเหงา! ฝ้ายขับรถพาเที่ยวได้ เป็นเพื่อนคุย เป็นตากล้องให้ด้วย อยากไปคาเฟ่ไหนในเชียงรายบอกมาเลยค่ะ',
-                img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80',
-                badge: 'Buddy', badgeColor: '#8e44ad', badgeIcon: 'fa-camera'
-            }
+            { id: 'g1', name: 'ป้าหน่อย (60)', loc: 'กว๊านพะเยา', skill: 'พานั่งเรือ / ไหว้พระกลางน้ำ', price: '฿400', unit: '/ทริป', desc: 'สวัสดีจ้า ป้าหน่อยคนพะเยาแต้ๆ เน้อ ใครอยากนั่งเรือพายไปไหว้พระวัดติโลกอารามกลางกว๊าน หรือหาปลาจุ่มอร่อยๆ กินริมกว๊าน ทักหาป้าได้เลยจ้า', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80', places: ['กว๊านพะเยา', 'วัดติโลกอาราม', 'ปลาจุ่ม', 'ในเมือง', 'ของกิน'], gallery: ['https://images.unsplash.com/photo-1596422846543-75c6fc197f07?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80', 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80'] },
+            { id: 'g2', name: 'พี่สิงห์ (42)', loc: 'ภูลังกา อ.ปง', skill: 'ขับรถขึ้นเขา / ดูทะเลหมอก', price: '฿1200', unit: '/วัน', desc: 'หาคนขับรถขึ้นภูลังกา ผาช้างน้อย ทักมาครับ ทางโค้งทางชันพี่ชำนาญมาก พาไปดูทะเลหมอกตอนเช้าฟินๆ มีอุปกรณ์แคมป์ปิ้งให้ยืมด้วยนะ ปลอดภัยแน่นอน', img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80', places: ['ภูลังกา', 'ปง', 'ผาช้างน้อย', 'ทะเลหมอก', 'เขา', 'เดินป่า'], gallery: ['https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80', 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80'] },
+            { id: 'g3', name: 'น้องริน (21)', loc: 'ม.พะเยา / หน้ามอ', skill: 'พาตะลุยคาเฟ่ / ตากล้อง', price: '฿300', unit: '/ชม.', desc: 'เด็กมอพะเยารายงานตัวค่า! ใครมาเที่ยวแล้วอยากได้รูปสวยๆ ฟีลเกาหลีริมกว๊าน หรือคาเฟ่ลับหน้ามอ รินพาไปได้หมด เป็นตากล้องส่วนตัวให้ด้วยน้า', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80', places: ['ม.พะเยา', 'หน้ามอ', 'คาเฟ่', 'ถ่ายรูป', 'ริมกว๊าน', 'เมือง'], gallery: ['https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80', 'https://images.unsplash.com/photo-1495474472204-5ce1b5f13c6f?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80'] }
         ];
 
-        // --- 3. CHAT SESSIONS ---
         const chatSessions = {
-            'g1': [{ sender: 'left', text: 'สวัสดีจ้ะ วันนี้สนใจอยากให้ป้าพาไปเที่ยวแบบไหนจ๊ะ? บอกมาได้เลยนะ' }],
-            'g2': [{ sender: 'left', text: 'สวัสดีครับ อยากไปเที่ยวแนวไหน ให้พี่ขับรถไปรับที่พักเลยไหมครับ?' }],
-            'g3': [{ sender: 'left', text: 'สวัสดีค่าา สนใจอยากไปเที่ยวแนวไหนคะ ให้ฝ้ายขับรถไปรับได้น้า 😊' }],
-            'support': [{ sender: 'left', text: 'สวัสดีครับ มีอะไรให้ทีมงาน FolkFound ช่วยดูแลไหมครับ?' }]
+            'g1': [{ sender: 'left', text: 'สวัสดีจ้า มาเที่ยวพะเยาวันไหน แวะมานั่งเรือกว๊านพะเยากับป้าได้เน้อ' }],
+            'g2': [{ sender: 'left', text: 'สวัสดีครับ สนใจขึ้นภูลังกาวันไหนครับ ให้พี่เอารถกระบะไปรับที่ท่ารถได้เลยนะ' }],
+            'g3': [{ sender: 'left', text: 'ฮัลโหลล มาเที่ยวพะเยาหรอคะ ให้รินพาไปถ่ายรูปคาเฟ่สวยๆ ได้น้า 😊' }]
         };
 
-        let currentChatID = null;
-        let currentGuide = null;
+        let currentChatID = null; let currentGuide = null; let chatFromList = false;
 
-        function renderGuides() {
-            const container = document.getElementById('guide-list-container');
-            let html = '';
-            dbGuides.forEach(g => {
-                html += `
-                <div class="guide-card" onclick="goToDetail('${g.id}')">
-                    <div class="card-img-box">
-                        <img src="${g.img}" alt="">
-                        <div class="badge-verified" style="color:${g.badgeColor}"><i class="fa-solid ${g.badgeIcon}"></i> ${g.badge}</div>
-                    </div>
-                    <div class="card-details">
-                        <div>
-                            <h3 class="guide-name">${g.name}</h3>
-                            <p class="guide-loc"><i class="fa-solid fa-location-dot" style="color:var(--primary)"></i> ${g.loc}</p>
-                            <div class="guide-skill">${g.skill}</div>
-                        </div>
-                        <div class="guide-footer">
-                            <span class="rating"><i class="fa-solid fa-star" style="color:#FBC02D"></i> 4.9</span>
-                            <span class="price">${g.price}<span>${g.unit}</span></span>
-                        </div>
-                    </div>
-                </div>`;
-            });
-            container.innerHTML = html;
+        // --- 4. NAVIGATION MENUS ---
+        function resetNav() {
+            document.getElementById('nav-icon-home').classList.remove('active');
+            document.getElementById('nav-icon-chat').classList.remove('active');
+            document.getElementById('nav-icon-profile').classList.remove('active');
         }
+
+        function openHome() { resetNav(); document.getElementById('nav-icon-home').classList.add('active'); showScreen('screen-home'); }
+        function openChatList() { resetNav(); document.getElementById('nav-icon-chat').classList.add('active'); renderChatList(); showScreen('screen-chat-list'); }
+        function openProfile() { resetNav(); document.getElementById('nav-icon-profile').classList.add('active'); showScreen('screen-profile'); }
 
         function showScreen(screenId) {
             document.querySelectorAll('.screen').forEach(el => { el.classList.remove('active'); el.classList.add('hidden'); });
             const target = document.getElementById(screenId); target.classList.remove('hidden'); target.classList.add('active');
+            
+            const hideNavScreens = ['screen-detail', 'screen-chat', 'screen-edit-profile', 'screen-my-trips', 'screen-favorites', 'screen-settings', 'screen-admin-contact'];
+            if(hideNavScreens.includes(screenId)) {
+                document.getElementById('main-bottom-nav').style.display = 'none';
+            } else {
+                document.getElementById('main-bottom-nav').style.display = 'flex';
+            }
+        }
+
+        // --- 5. EDIT PROFILE LOGIC ---
+        // ฟังก์ชันอ่านไฟล์รูปภาพและแสดงผลพรีวิว
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function(){
+                const output = document.getElementById('preview-user-img');
+                output.src = reader.result;
+            };
+            if(event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        }
+
+        function saveProfile() {
+            const newName = document.getElementById('input-user-name').value;
+            const newTag = document.getElementById('input-user-tag').value;
+            const newImg = document.getElementById('preview-user-img').src; // ดึงรูปที่พรีวิวไว้มาบันทึก
+            
+            if(newName.trim() === "") { alert("กรุณาใส่ชื่อด้วยครับ"); return; }
+            
+            // อัปเดตข้อมูลหน้า UI หลัก
+            document.getElementById('display-user-name').innerText = newName;
+            document.getElementById('display-user-tag').innerHTML = `<i class="fa-solid fa-plane-departure"></i> ${newTag}`;
+            document.getElementById('display-user-img').src = newImg; // เปลี่ยนรูปหน้าโปรไฟล์
+            
+            goBack();
+        }
+
+        function openSubScreen(id) {
+            if(id === 'screen-favorites') {
+                const g = dbGuides[2];
+                document.getElementById('fav-list-container').innerHTML = `
+                    <div class="guide-card" onclick="goToDetail('${g.id}')">
+                        <div class="card-img-box"><img src="${g.img}" alt=""></div>
+                        <div class="card-details">
+                            <div><h3 class="guide-name">${g.name}</h3><p class="guide-loc"><i class="fa-solid fa-location-dot" style="color:var(--primary)"></i> ${g.loc}</p><div class="guide-skill">${g.skill}</div></div>
+                            <div class="guide-footer"><span class="rating"><i class="fa-solid fa-heart" style="color:#E91E63"></i> โปรด</span><span class="price">${g.price}<span>${g.unit}</span></span></div>
+                        </div>
+                    </div>`;
+            }
+            showScreen(id);
+        }
+
+        // --- 6. RENDER CHAT LIST ---
+        function renderChatList() {
+            const container = document.getElementById('chat-list-render');
+            let html = '';
+
+            dbGuides.forEach(g => {
+                if(chatSessions[g.id]) {
+                    const lastMsg = chatSessions[g.id][chatSessions[g.id].length - 1].text;
+                    html += `<div class="chat-list-item" onclick="startChatSession('${g.id}', '${g.name}', '${g.img}', true)"><div class="chat-list-avatar-wrap"><img src="${g.img}" class="chat-list-avatar"><div class="online-dot" style="background:#ddd; border:none;"></div></div><div class="chat-list-info"><div class="chat-list-name">${g.name}</div><div class="chat-list-preview">${lastMsg}</div></div></div>`;
+                }
+            });
+
+            if(html === '') {
+                 html = '<div class="empty-state" style="margin-top:40px;"><i class="fa-solid fa-comments" style="font-size:40px; color:#ddd; margin-bottom:10px;"></i><br>ยังไม่มีประวัติการพูดคุย</div>';
+            }
+            container.innerHTML = html;
+        }
+
+        // --- 7. HOME & DETAIL LOGIC ---
+        function handleSearch() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const filteredGuides = dbGuides.filter(g => g.name.toLowerCase().includes(searchTerm) || g.loc.toLowerCase().includes(searchTerm) || g.skill.toLowerCase().includes(searchTerm) || g.places.some(place => place.toLowerCase().includes(searchTerm)));
+            document.querySelectorAll('.cat-pill').forEach(el => el.classList.remove('active'));
+            document.querySelector('.cat-pill').classList.add('active'); 
+            renderGuides(filteredGuides);
+        }
+
+        function filterCategory(category, element) {
+            document.getElementById('search-input').value = '';
+            document.querySelectorAll('.cat-pill').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            if(category === 'ทั้งหมด') renderGuides(dbGuides);
+            else renderGuides(dbGuides.filter(g => g.places.includes(category) || g.skill.includes(category)));
+        }
+
+        function renderGuides(guidesToRender = dbGuides) {
+            const container = document.getElementById('guide-list-container');
+            let html = '';
+            if(guidesToRender.length === 0) { container.innerHTML = '<div class="empty-state"><i class="fa-solid fa-face-frown" style="font-size:30px; margin-bottom:10px; color:#ccc;"></i><br>ไม่พบเพื่อนพาเที่ยวในสถานที่นี้</div>'; return; }
+            guidesToRender.forEach(g => {
+                html += `<div class="guide-card" onclick="goToDetail('${g.id}')"><div class="card-img-box"><img src="${g.img}" alt=""></div><div class="card-details"><div><h3 class="guide-name">${g.name}</h3><p class="guide-loc"><i class="fa-solid fa-location-dot" style="color:var(--primary)"></i> ${g.loc}</p><div class="guide-skill">${g.skill}</div></div><div class="guide-footer"><span class="rating"><i class="fa-solid fa-star" style="color:#FBC02D"></i> 4.9</span><span class="price">${g.price}<span>${g.unit}</span></span></div></div></div>`;
+            });
+            container.innerHTML = html;
         }
 
         function goToDetail(id) {
@@ -332,150 +617,95 @@
             document.getElementById('detail-skill').innerText = currentGuide.skill;
             document.getElementById('detail-price').innerText = currentGuide.price;
             document.getElementById('detail-desc').innerText = currentGuide.desc;
+            let galleryHtml = '';
+            currentGuide.gallery.forEach(imgUrl => { galleryHtml += `<img src="${imgUrl}" class="gallery-img">`; });
+            document.getElementById('detail-gallery').innerHTML = galleryHtml;
             showScreen('screen-detail');
         }
 
-        function goToChatFromDetail() { startChatSession(currentGuide.id, currentGuide.name, currentGuide.img); }
-        function goToChat(type) { if(type === 'Support') startChatSession('support', 'Local Support', 'https://cdn-icons-png.flaticon.com/512/4712/4712035.png'); }
+        // --- 8. CHAT LOGIC ---
+        function goToChatFromDetail() { startChatSession(currentGuide.id, currentGuide.name, currentGuide.img, false); }
 
-        function startChatSession(id, name, img) {
-            currentChatID = id;
+        function startChatSession(id, name, img, isFromList) {
+            currentChatID = id; chatFromList = isFromList; 
             document.getElementById('chat-name').innerText = name;
             document.getElementById('chat-avatar').src = img;
-            renderMessages();
-            showScreen('screen-chat');
+            renderMessages(); showScreen('screen-chat');
         }
 
         function renderMessages() {
-            const container = document.getElementById('message-container');
-            container.innerHTML = '';
+            const container = document.getElementById('message-container'); container.innerHTML = '';
             const history = chatSessions[currentChatID] || [];
             history.forEach(msg => {
-                const div = document.createElement('div');
-                div.className = `msg msg-${msg.sender}`;
-                div.innerText = msg.text;
+                const div = document.createElement('div'); div.className = `msg msg-${msg.sender}`; div.innerText = msg.text;
                 container.appendChild(div);
             });
             container.scrollTop = container.scrollHeight;
         }
 
         function handleEnter(e) { if(e.key === 'Enter') sendMessage(); }
-
         function sendMessage() {
-            const input = document.getElementById('msg-input');
-            const text = input.value.trim();
+            const input = document.getElementById('msg-input'); const text = input.value.trim();
             if(text === "") return;
-
-            addMessage('right', text);
-            input.value = "";
-            const typing = document.getElementById('typing-indicator');
-            typing.style.display = 'block';
+            addMessage('right', text); input.value = "";
+            document.getElementById('typing-indicator').style.display = 'block';
             document.getElementById('message-container').scrollTop = document.getElementById('message-container').scrollHeight;
 
             setTimeout(() => {
-                typing.style.display = 'none';
-                const reply = generateSmartReply(text, currentChatID);
-                addMessage('left', reply);
-            }, 1000 + Math.random() * 1000); // ดีเลย์สุ่ม 1-2 วิ ให้ดูเหมือนคนพิมพ์จริงๆ
+                document.getElementById('typing-indicator').style.display = 'none';
+                addMessage('left', generateSmartReply(text, currentChatID));
+            }, 1000 + Math.random() * 800); 
         }
 
         function addMessage(sender, text) {
             if(!chatSessions[currentChatID]) chatSessions[currentChatID] = [];
             chatSessions[currentChatID].push({ sender, text });
             const container = document.getElementById('message-container');
-            const div = document.createElement('div');
-            div.className = `msg msg-${sender}`;
-            div.innerText = text;
-            container.appendChild(div);
-            container.scrollTop = container.scrollHeight;
+            const div = document.createElement('div'); div.className = `msg msg-${sender}`; div.innerText = text;
+            container.appendChild(div); container.scrollTop = container.scrollHeight;
         }
 
-        // --- 4. ADVANCED AI LOGIC (ตอบสมจริง จับคีย์เวิร์ด) ---
         function generateSmartReply(input, id) {
-            // ทำตัวพิมพ์เล็กและลบเว้นวรรคบางส่วนเพื่อตรวจจับง่ายขึ้น
-            const raw = input;
-            input = input.toLowerCase().replace(/\s+/g, ''); 
+            const raw = input; input = input.toLowerCase().replace(/\s+/g, ''); 
+            if(input.includes('กิน') || input.includes('อาหาร') || input.includes('ปลาจุ่ม')) {
+                if(id === 'g1') return 'มาพะเยาต้องกินปลาจุ่มริมกว๊านนะลูก ร้านเด็ดๆ ป้ารู้จักเยอะเลย';
+                if(id === 'g2') return 'บนภูลังกามีหมูกระทะฟินๆ ครับ หรือจะแวะกินข้าวซอยตีนดอยก่อนขึ้นก็มีนะ';
+                if(id === 'g3') return 'หน้ามอของกินเพียบเลยค่ะ! บอกรินมาได้เลย เดี๋ยวพาไปตะลุย';
+                return 'พะเยาของกินอร่อยเยอะมากครับ';
+            }
+            if(input.includes('กว๊าน') || input.includes('วัด')) {
+                if(id === 'g1') return 'ป้ามีเรือพายส่วนตัว พาไปไหว้หลวงพ่อศิลาที่วัดติโลกอารามกลางน้ำได้จ้ะ';
+                if(id === 'g3') return 'ริมกว๊านช่วงเย็นแสงสวยมากก รินพาไปเดินเล่นถ่ายรูปได้นะคะ';
+                return 'กว๊านพะเยาเป็นจุดเช็คอินหลักเลยครับ';
+            }
+            if(input.includes('ราคา') || input.includes('บาท')) {
+                if(id === 'g1') return 'ป้าคิดแค่ 400 บาทต่อทริปจ้ะ';
+                if(id === 'g2') return 'พี่คิดวันละ 1,200 บาทครับ ขับรถขึ้นดอยให้ (ไม่รวมค่าน้ำมันนะ)';
+                if(id === 'g3') return 'รินคิดชั่วโมงละ 300 ค่ะ เป็นเพื่อนเที่ยว เป็นช่างภาพให้ด้วย';
+                return 'เรทราคาดูได้ที่หน้าโปรไฟล์เลยครับ';
+            }
+            if(input.includes('มารับ') || input.includes('ไปรับ') || input.includes('ท่ารถ')) {
+                return 'ส่งโลเคชั่นมาได้เลยครับ/ค่ะ เดี๋ยวเราไปรับถึงที่เลย';
+            }
+            if(input.includes('จอง') || input.includes('ว่างไหม')) return 'จะให้ไปพาเที่ยววันไหน พิมพ์บอกไว้ได้เลยค่ะ เดี๋ยวเช็คคิวให้';
+            if(input.includes('ขอบคุณ') || input.includes('ok')) return 'ยินดีเลยจ้า ไว้เจอกันนะ 😊';
             
-            // --- หมวด: ของกิน / อาหารตามสั่ง (จากรูปหน้าจอ) ---
-            if(input.includes('กิน') || input.includes('อาหาร') || input.includes('หิว') || input.includes('ตามสั่ง')) {
-                const foodReplies = {
-                    'g1': ['ร้านตามสั่งอร่อยๆ ริมน้ำ ป้ารู้จักเยอะเลย ขับเรือพาไปกินได้จ้ะ ราคาชาวบ้านเลย', 'ได้จ้ะ แถวนี้ของกินเพียบ เดี๋ยวป้าพาแวะกินเตี๋ยวเรือก่อนเลยดีไหม?'],
-                    'g2': ['อาหารตามสั่งตีนดอยมีครับ หรือจะขึ้นไปกินหมูกระทะรับลมหนาวบนดอยดีครับ?', 'ได้ครับ จัดไป! มีร้านประจำผมอยู่ อร่อยและให้เยอะมากครับ'],
-                    'g3': ['กินอะไรดีคะ ตามสั่ง ก๋วยเตี๋ยว หรือแวะคาเฟ่หาขนมกินเล่นก่อนดี? 🍰', 'ร้านตามสั่งได้เลยค่า กินง่ายอยู่ง่าย เซฟงบไปลุยคาเฟ่ต่อเนอะ 😆']
-                };
-                if(foodReplies[id]) return foodReplies[id][Math.floor(Math.random() * foodReplies[id].length)];
-                return 'มีร้านอร่อยแนะนำเยอะเลยครับ อยากทานแนวไหนเป็นพิเศษไหมครับ?';
-            }
-
-            // --- หมวด: ธรรมชาติ / น้ำตก (จากรูปหน้าจอ) ---
-            if(input.includes('น้ำตก') || input.includes('ธรรมชาติ') || input.includes('ภูเขา') || input.includes('เขา')) {
-                if(id === 'g1') return 'แถวอัมพวาไม่มีน้ำตกนะลูก มีแต่คลองกับสวนมะพร้าว เอาเป็นนั่งเรือชมธรรมชาติแทนได้ไหมจ๊ะ?';
-                if(id === 'g2') return 'น้ำตกบนดอยอินทนนท์สวยมากครับ ช่วงนี้น้ำเยอะด้วย เดี๋ยวพี่พาแวะน้ำตกวชิรธารเลย ถ่ายรูปสวยแน่นอน';
-                if(id === 'g3') return 'เชียงรายมีน้ำตกสวยๆ เยอะเลยค่า เดี๋ยวฝ้ายพาไปเก็บบรรยากาศฟีลธรรมชาติ ถ่ายรูปปังๆ ให้เลย 🍃';
-                return 'บรรยากาศธรรมชาติตอนนี้กำลังดีเลยครับ สนใจให้พาไปลุยเลยไหมครับ?';
-            }
-
-            // --- หมวด: ราคา / ค่าใช้จ่าย ---
-            if(input.includes('ราคา') || input.includes('บาท') || input.includes('คิดยังไง') || input.includes('เรท')) {
-                if(id === 'g1') return 'ป้าคิดค่าพาเที่ยว 500 บาทต่อวันจ้ะ รวมค่าเรือป้าแล้วนะ นั่งได้ทั้งวันเลย';
-                if(id === 'g2') return 'พี่คิด 800 บาทต่อวันครับ ขับรถพาเที่ยวให้ทั้งวัน แต่น้ำมันเติมให้ต่างหากตามระยะทางนะครับ';
-                if(id === 'g3') return 'ฝ้ายคิดเรทชั่วโมงละ 350 บาทค่ะ ขับรถพาไปได้ทุกที่ เป็นตากล้องส่วนตัวให้ไม่อั้นเลยย 📸';
-                return 'เรทราคาจะขึ้นอยู่กับระยะเวลาที่ให้ดูแลครับ สอบถามรายละเอียดก่อนได้เลยครับ';
-            }
-            
-            // --- หมวด: การเดินทาง / ไปรับ ---
-            if(input.includes('มารับ') || input.includes('ไปรับ') || input.includes('ที่พัก') || input.includes('โรงแรม')) {
-                if(id === 'g1') return 'หนูพักอยู่รีสอร์ทไหนจ๊ะ เดี๋ยวป้าเอาเรือไปรับถึงท่าน้ำของที่พักได้เลย สะดวกมากๆ';
-                if(id === 'g2') return 'ส่งโลเคชั่นที่พักมาได้เลยครับ เดี๋ยวพี่เอารถกระบะไปรับถึงหน้าโรงแรมเลย ขนของสบายครับ';
-                if(id === 'g3') return 'พักในเมืองหรือนอกเมืองคะ? ส่งพิกัดมาได้เลย เดี๋ยวฝ้ายขับรถไปรับหน้าล็อบบี้เลยค่า 🚗💨';
-                return 'ส่งโลเคชั่นมาได้เลยครับ เดี๋ยวเราไปรับถึงที่เลยครับ';
-            }
-
-            // --- หมวด: ทักทายตอบรับทั่วไป ---
-            if(input.includes('จอง') || input.includes('คิว') || input.includes('วันไหน')) return 'จะให้ไปดูแลวันไหน เวลาไหน พิมพ์บอกไว้ได้เลยครับ/ค่ะ เดี๋ยวเช็คคิวให้เลย';
-            if(input.includes('ขอบคุณ') || input.includes('โอเค') || input.includes('ok') || input.includes('จัดไป')) {
-                const thanks = ['ยินดีเลยจ้ะ ไว้เจอกันนะ', 'รับทราบครับผม เตรียมตัวลุยได้เลย!', 'โอเคค่าา แพลนชุดรอไว้ได้เลยน้าา ✨'];
-                return thanks[Math.floor(Math.random() * thanks.length)];
-            }
-            
-            // --- FALLBACK (ถ้าพิมพ์คำแปลกๆ ที่บอทไม่รู้จัก จะสุ่มตอบแบบเนียนๆ ไม่ให้ซ้ำ) ---
-            const fallbacks = {
-                'g1': [
-                    `ป้าอ่านไม่ค่อยถนัด พิมพ์มาใหม่ได้ไหมลูก หรืออยากไปที่ไหนเป็นพิเศษพิมพ์ชื่อที่เที่ยวมาเลยนะ`,
-                    `"${raw}" หรอจ๊ะ... น่าสนใจนะ เดี๋ยวป้าลองพาไปดู แต่อยากแวะไหนอีกบอกได้เลยนะ`,
-                    `เอาเป็นว่าหนูมาถึงอัมพวาเมื่อไหร่ โทรหาป้าได้เลยนะ เดี๋ยวป้าจัดการให้หมดจ้ะ`
-                ],
-                'g2': [
-                    `เข้าใจครับ ไว้พี่พาแวะดูละกันนะ มีแพลนที่อยากไปอีกไหมครับ?`,
-                    `ได้เลยครับสบายมาก ทางบนดอยพี่ชำนาญอยู่แล้ว ไว้ใจได้เลย`,
-                    `อืมมม... "${raw}" น่าสนใจครับ เดี๋ยวพี่ลองจัดเส้นทางให้มันผ่านจุดนี้ละกันนะครับ`
-                ],
-                'g3': [
-                    `"${raw}" จัดไปค่าา! ฝ้ายตามใจคนเที่ยวอยู่แล้ว อยากแวะไหนรีเควสมาได้ตล๊อดดด`,
-                    `รับทราบค่าา เดี๋ยวฝ้ายทำการบ้านแพลนที่เที่ยวเพิ่มให้นะคะ มีมุมไหนอยากไปอีกบอกได้เลยน้า`,
-                    `งื้อออ น่าไปมากก! เดี๋ยวพาไปตะลุยเลยค่ะ เตรียมพรอพถ่ายรูปมาให้พร้อมละกันน้า 👗`
-                ],
-                'support': [
-                    'แอดมินรับทราบครับ มีปัญหาการใช้งานส่วนไหนแจ้งเพิ่มเติมได้เลยนะครับ',
-                    'หากต้องการจองไกด์ สามารถกดเข้าที่โปรไฟล์ไกด์แล้วทักแชทได้โดยตรงเลยนะครับ'
-                ]
-            };
-
-            const fallbackList = fallbacks[id] || fallbacks['support'];
-            return fallbackList[Math.floor(Math.random() * fallbackList.length)];
+            return 'รับทราบครับ เดี๋ยวตรวจสอบข้อมูลให้นะครับ';
         }
 
+        // --- 9. SMART BACK BUTTON ---
         function goBack() {
-            const chatScreen = document.getElementById('screen-chat');
-            const detailScreen = document.getElementById('screen-detail');
-            if (chatScreen.classList.contains('active')) {
-                if(currentChatID === 'support') showScreen('screen-home');
-                else showScreen('screen-detail');
-            } else if (detailScreen.classList.contains('active')) {
-                showScreen('screen-home');
+            const activeScreen = document.querySelector('.screen.active').id;
+            if (activeScreen === 'screen-chat') {
+                if (chatFromList) openChatList(); else showScreen('screen-detail'); 
+            } 
+            else if (activeScreen === 'screen-detail') openHome(); 
+            else if (['screen-edit-profile', 'screen-my-trips', 'screen-favorites', 'screen-settings', 'screen-admin-contact'].includes(activeScreen)) {
+                openProfile(); 
             }
         }
 
+        // Init
         renderGuides();
     </script>
 </body>
